@@ -7,6 +7,8 @@ const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 
+const publicFolder = path.join(__dirname, 'public');
+
 const dotenv = require('dotenv').config({ path: __dirname + '/.env' });
 
 module.exports = (env = {}, argv) => {
@@ -36,6 +38,14 @@ module.exports = (env = {}, argv) => {
       filename: 'index.html',
       isProd,
     }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: `${publicFolder}/`,
+          to: './',
+        },
+      ],
+    })
   ];
 
   const rules = [
